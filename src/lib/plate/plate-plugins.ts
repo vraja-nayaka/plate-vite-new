@@ -86,6 +86,7 @@ import { createLineHeightPlugin } from '@udecode/plate-line-height';
 import { createLinkPlugin, ELEMENT_LINK } from '@udecode/plate-link';
 import {
   createTodoListPlugin,
+  // createListPlugin,
   ELEMENT_LI,
   ELEMENT_OL,
   ELEMENT_TODO_LI,
@@ -235,6 +236,7 @@ export const plugins = createPlugins(
             ELEMENT_H3,
             ELEMENT_BLOCKQUOTE,
             ELEMENT_CODE_BLOCK,
+            ELEMENT_TODO_LI,
           ],
         },
       },
@@ -249,6 +251,7 @@ export const plugins = createPlugins(
             ELEMENT_H3,
             ELEMENT_BLOCKQUOTE,
             ELEMENT_CODE_BLOCK,
+            ELEMENT_TODO_LI,
           ],
         },
       },
