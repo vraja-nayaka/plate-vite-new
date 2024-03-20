@@ -8,13 +8,17 @@ import { useMemo } from "react";
 import { Icons } from "@/components/icons";
 import { Button } from "./button";
 import { useSelectedPlantUml } from "@/lib/plate/plantuml/store";
+import { MacroTitleInput } from "./macro-title-input";
+import { useReadOnly } from "slate-react";
+import { ImageTitle } from "./image-title";
 
 export const PlantumlElement = withRef<
   // TODO: change types
   typeof PlateElement<TPlantumlElement[]>
 >((element, ref) => {
   const { children, ...props } = element;
-  const { title, content } = props.element;
+  const { content, title } = props.element;
+  const readOnly = useReadOnly();
 
   const src = useMemo(
     () => plantumlBaseUrl + PlantUmlEncoder.encode(content),
@@ -35,31 +39,42 @@ export const PlantumlElement = withRef<
       suppressContentEditableWarning
       {...props}
     >
-      <MacroWrapper
-        header={<>PlantUml {title}</>}
-        actions={
-          <>
-            <Button
-              variant="ghost"
-              className="h-5 justify-between px-1 text-xs"
-              size="xs"
-              onClick={onEditClick}
-            >
-              <Icons.editing />
-            </Button>
-            <Button
-              variant="ghost"
-              className="h-5 justify-between px-1 text-xs"
-              size="xs"
-              {...removeButtonProps}
-            >
-              <Icons.clear />
-            </Button>
-          </>
-        }
-      >
-        <img src={src} />
-      </MacroWrapper>
+      {readOnly ? (
+        <>
+          <ImageTitle>{title}</ImageTitle>
+          <img src={src} />
+        </>
+      ) : (
+        <MacroWrapper
+          header={
+            <>
+              PlantUml <MacroTitleInput />
+            </>
+          }
+          actions={
+            <>
+              <Button
+                variant="ghost"
+                className="h-5 justify-between px-1 text-xs"
+                size="xs"
+                onClick={onEditClick}
+              >
+                <Icons.editing />
+              </Button>
+              <Button
+                variant="ghost"
+                className="h-5 justify-between px-1 text-xs"
+                size="xs"
+                {...removeButtonProps}
+              >
+                <Icons.clear />
+              </Button>
+            </>
+          }
+        >
+          <img src={src} />
+        </MacroWrapper>
+      )}
       {children}
     </PlateElement>
   );

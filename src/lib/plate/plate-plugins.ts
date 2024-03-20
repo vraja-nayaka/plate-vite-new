@@ -177,6 +177,7 @@ const resetBlockTypesCodeBlockRule = {
 
 export const plugins = createPlugins(
   [
+    // Для работы rtc необходимо запустить бекенд (репо: slate-yjs)
     // createYjsPlugin({
     //   options: {
     //     hocuspocusProviderOptions: {
